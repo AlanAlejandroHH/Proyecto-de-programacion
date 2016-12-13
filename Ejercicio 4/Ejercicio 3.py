@@ -1,5 +1,6 @@
 #EJERCICIO 3
 #Alejandro Nava Castillo
+#Solo correr en python, no ipython
 tn=raw_input('Ingrese Su Archivo De Texto(sin extension) ')
 t=tn+".txt"
 def verificacion(xn,x):
