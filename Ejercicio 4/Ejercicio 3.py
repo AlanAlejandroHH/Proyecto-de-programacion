@@ -42,5 +42,5 @@ newtex.close()
 newtex=open(p,'w+')
 lineas=newtex.readlines()
 for i in n:
-    newtex.write(str(i+1)+") "+arc[i]+'\n')
+    newtex.write(str(i+1)+") "+arc[i])
 newtex.close()
