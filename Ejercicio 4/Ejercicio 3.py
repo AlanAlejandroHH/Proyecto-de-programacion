@@ -35,12 +35,13 @@ tex.close()
 tex=open(t,'r')
 arc=tex.readlines()
 lista=[]
-for i in n:
+gg=range(0,len(arc))
+for i in gg:
     print (i+1),")",arc[i]
 newtex=open(p,'w')
 newtex.close()
 newtex=open(p,'w+')
 lineas=newtex.readlines()
-for i in n:
+for i in gg:
     newtex.write(str(i+1)+") "+arc[i])
 newtex.close()
