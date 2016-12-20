@@ -2,42 +2,39 @@
 #Alejandro Nava Castillo
 N=input("Cuantos archivos desea analizar? ")
 gg=raw_input('Nombre del nuevo archivo ')
-nuevoarchivo=gg+".txt"
+g=gg+".txt"
 n=range(0,N)
 lista=[]
 tex=[]
-cumple=0
-def verificacion(xn,x):
+def verificacion(t,tn):
+    cumple=0
     try:
-        archivo=open(x)
-        archivo.close()
+        archivo=open(t)
         cumple=0
     except:
         cumple=1
-    while cumple==1:
-        print"Su archivo no se encuentre en el directorio de ejecucion"
-        xn=raw_input('Por favor, ingrese otro nombre ')
-        x=xn+".txt"
-        try:
-            archivo=open(x)
-            archivo.close()
-            cumple=0
-        except:
-            cumple=1
+        while cumple==1:
+            print"Su archivo no se encuentre en el directorio de ejecucion"
+            tn=raw_input('Por favor, ingrese otro nombre ')
+            t=tn+".txt"
+            try:
+                archivo=open(t)
+                cumple=0
+            except:
+                cumple=1
+    return t
+    return tn
 for i in n:
-  cn=raw_input('Ingrese Su Archivo De Texto(sin extension) ')
-  c=cn+".txt"
-  verificacion(cn,c)
-  lista.append(c)
+  tni=raw_input('Ingrese Su Archivo De Texto(sin extension) ')
+  ti=tni+".txt"
+  ti=verificacion(ti,tni)
+  lista.append(ti)
+print lista
 #(En consideracion) print nuevoarchivo,"Contiene elementos de los archivos",lista
-contlista=range(0,len(lista))
-new=open(nuevoarchivo,'w+')
+ran=range(0,len(lista))
+new=open(g,'w+')
 def agregaralista(x):
-    abierto=open(x,'r')
-    abierto2=abierto.readlines()
-    kk=range(0,len(abierto2))
-    for i in kk:
-        new.write(abierto2[i])
-    new.write('\n')
-for i in contlista:
-    agregaralista(lista[i])
+    for i in ran:
+        new.write(lista[i])
+        new.write('\n')
+agregaralista(lista)
