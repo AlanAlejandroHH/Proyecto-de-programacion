@@ -748,7 +748,7 @@ def bufonn(x):
     buforeina=neoj[0]
     if buforeina==1:
       print "El Jugador", tjbb[buforeina-1], "Despierta A Una Reina Gracias Al bufon!"
-      manos[1].append("rey")
+      manos[0].append("rey")
       reyf(x)
     if buforeina!=1:
       print "El Jugador", tjbb[buforeina-1], "Despierta A Una Reina Gracias Al bufon!"
