@@ -1,8 +1,18 @@
+#Este Juego Fue Programado Por:
+#Alejandro Nava Castillo
+#Estudiante De 1er Semestre de
 import random
 import sys
 print "Bienvenido al juego Sleeping Queens!".center(0," ")
 c=raw_input("Conoces Las Reglas De este Juego(Enter si/n no)")
 if c=="no" or c=="n":
+  print ''' 
+  
+  Este Juego Fue Programado Por Alejandro Nava Castillo
+  Estudiante De Primer Semestre(102) De La Facultad FISMAT De La UMSH Como Proyecto Final Del Curso De Programacion
+  
+  Los Derechos De Este Juego Pertenecen a Gamewright y Solo Han Sido Replicados Sin Fines De Lucro '''
+  raw_input
   print '''
   Este es un juego para 2-5 jugadores, que trabaja con una baraja modificada,con cartas con efectos diversos como seran descritos a continuacion, y que esta conformada por:
 
@@ -45,7 +55,8 @@ if c=="no" or c=="n":
   print '''
   Sleeping Queens es un juego original y muy divertido, comprobado por alumnos de la calse 2 de la facultad de Ciencias Fisico-Matematicas y por muchos jugadores a lo largo del mundo. Espero que esta version, aunque imperfecta y digital pueda entretenerte tanto como a nosotros
 
-    Asi que a fin de cuentas...Destruye A Tus Rivales!, Hurta El Fruto De Su Fortuna Y Miralos Llorar Y Retorcerse En Su Impotencia! Pero Cuidado, podrian estar pensando en hacerte lo mismo a ti...'''
+    Asi que a fin de cuentas...Destruye A Tus Rivales!, Hurta El Fruto De Su Fortuna Y Miralos Llorar Y Retorcerse En Su Impotencia! Pero Cuidado, podrian estar pensando en hacerte lo mismo a ti...
+    '''
 lista_jugadores=["j1","j2","j3","j4","j5"]
 reinas=["Reina Arcoiris","Reina Pastel","Reina Starfish","Reina Rosa","Reina Mariquita","Reina Girasol","Reina Pavo","Reina Luna","Reina Gato","Reina Perro","Reina Panqueque","Reina Corazon"]
 reinas_value=[5,5,5,5,10,10,10,10,15,15,15,20]
@@ -198,8 +209,12 @@ Sin Usar Su Efecto
 '''
 panelcaballero='''A Quien Robaras?(No Podras Robar Si No Esta Jugando)'''
 panelpocion='''Contra Quien La Usaras?(No Podras Robar Si No Esta Jugando)'''
-panelvarita='''Usar Varita?(s/n)'''
-paneldragon='''Usar Dragon?(s/n)'''
+panelvarita='''Usar Varita?
+Si(1)
+No(2)'''
+paneldragon='''Usar Dragon?
+Si(1)
+No(2)'''
 #propiedades de los jugadores--------------------------
 T1="Es el turno del jugador 1"
 T2="Es el turno del jugador 2"
@@ -297,6 +312,53 @@ def reyf(x):
     gameover(0)
     return jp[0]
 #
+def reyfb(x):
+  if len(reinas)==0:
+    print "No Hay Reinas Por Despertar", lj[x], "Pierde A Su Oportunidad"
+  else:
+    awake=random.choice(reinas)
+    print "Has Despertado A", awake
+    nawake=reinas.index(awake)
+    wpoint=reinas_value[nawake]
+    reinas.remove(awake)
+    jr[0].append(awake)
+    jr[0].remove(0)
+    jp[0]=jp[0]+wpoint
+    reinas_value.remove(wpoint)
+    if awake=="Reina Gato":
+      if "Reina Perro" in jr[0]:
+        print '''Oh no!, Tu Reina Perro Ataco a tu Reina Gato! Tuviste que volver a dormir a tu Reina Gato...'''
+        jr[0].remove("Reina Gato")
+        jr[0].append(0)
+        reinas.append("Reina Gato")
+        jp[0]=jp[0]-wpoint
+        reinas_value.append(15)
+        print "Tus reinas ahora son: ",jr[0]
+        print "Actualmente tienes", jp[0], "puntos"
+        return jp[0]
+      else:
+        nada="nada"
+    if awake=="Reina Perro":
+      if "Reina Gato" in jr[0]:
+        print '''Oh no!, Tu Reina Gato Ataco a tu Reina Perro! Tuviste que volver a dormir a tu Reina Perro...'''
+        jr[0].remove("Reina Perro")
+        jr[0].append(0)
+        reinas.append("Reina Perro")
+        jp[0]=jp[0]-wpoint
+        reinas_value.append(15)
+        print "Tus reinas ahora son: ",jr[0]
+        print "Actualmente tienes", jp[0], "puntos"
+        return jp[0]
+      else:
+        nada="nada"
+    if awake=="Reina Rosa":
+      print "La Gran Reina Rosa Te Permite Despertar otra Reina!"
+      jp[0]=reyfb(0)+5
+    print "Tus reinas ahora son: ",jr[0]
+    print "Actualmente tienes", jp[0], "puntos"
+    gameover(0)
+    return jp[0]
+#
 def robarmando(x):
   for i in range(0,len(tj)-1):
     print "Las Reinas Del Jugador", tj[i+1],"Son", jr[i+1],"(",(i+1),")"
@@ -335,6 +397,7 @@ def robarmando(x):
         print "J"+str(tj[x]),"Ahora Tiene"
         print jr[x], "Reinas"
         print "Y", jp[x], "Puntos"
+        gameover(0)
       else:
         print "No habia reina, no pudiste robar"
 #
@@ -357,7 +420,7 @@ def bufonf(x):
     buforeina=neoj[0]
     if buforeina==1:
       print "El Jugador", tjbb[buforeina-1], "Despierta A Una Reina Gracias Al bufon!"
-      reyf(x)
+      reyfb(x)
       print " "
     if buforeina!=1:
       print "El Jugador", tjbb[buforeina-1], "Despierta A Una Reina Gracias Al bufon!"
@@ -580,7 +643,6 @@ def reyn(x):
     wpoint=reinas_value[nawake]
     reinas.remove(awake)
     jr[x].append(awake)
-    gameover(x)
     jr[x].remove(0)
     jp[x]=jp[x]+wpoint
     reinas_value.remove(wpoint)
@@ -595,6 +657,7 @@ def reyn(x):
         manos[x].remove("rey")
         print "Sus Reinas Ahora Son: ",jr[x]
         print "Actualmente Tiene", jp[x], "Puntos"
+        gameover(x)
         return jp[x]
       else:
         nada="nada"
@@ -609,6 +672,7 @@ def reyn(x):
         reinas_value.append(15)
         print "Sus Reinas Ahora Son: ",jr[x]
         print "Actualmente Tiene", jp[x], "Puntos"
+        gameover(x)
         return jp[x]
       else:
         nada="nada"
@@ -616,60 +680,58 @@ def reyn(x):
       print "La Gran Reina Rosa Le Permite Despertar otra Reina!"
       manos[x].append("rey")
       jp[x]=reyn(x)+5
-    return jp[x]
+    gameover(x)
     print "Sus Reinas Ahora Son: ",jr[x]
     print "Actualmente Tiene", jp[x], "Puntos"
-    gameover(x)
+    return jp[x]
 def reynf(x):  #necesario para el funcionamiento del bufon aliado
-    awake=random.choice(reinas)
-    print lj[x], "Ha Despertado A", awake
-    nawake=reinas.index(awake)
-    wpoint=reinas_value[nawake]
-    reinas.remove(awake)
-    jr[x].append(awake)
-    gameover(x)
-    jr[x].remove(0)
-    jp[x]=jp[x]+wpoint
-    reinas_value.remove(wpoint)
-    if awake=="Reina Gato":
-      if "Reina Perro" in jr[x]:
-        print '''Oh no!, Su Reina Perro Ataco a Su Reina Gato! Tuvo Que Volver A Dormir A Su Reina Gato...'''
-        jr[x].remove("Reina Gato")
-        jr[x].append(0)
-        reinas.append("Reina Gato")
-        jp[x]=jp[x]-wpoint
-        reinas_value.append(15)
-        manos[x].remove("rey")
+    if len(reinas)==0:
+      print "No Hay Reinas Por Despertar", lj[x],"Pierde A Su Oportunidad"
+    else:
+        awake=random.choice(reinas)
+        print lj[x], "Ha Despertado A", awake
+        nawake=reinas.index(awake)
+        wpoint=reinas_value[nawake]
+        reinas.remove(awake)
+        jr[x].append(awake)
+        jr[x].remove(0)
+        jp[x]=jp[x]+wpoint
+        reinas_value.remove(wpoint)
+        if awake=="Reina Gato":
+          if "Reina Perro" in jr[x]:
+            print '''Oh no!, Su Reina Perro Ataco a Su Reina Gato! Tuvo Que Volver A Dormir A Su Reina Gato...'''
+            jr[x].remove("Reina Gato")
+            jr[x].append(0)
+            reinas.append("Reina Gato")
+            jp[x]=jp[x]-wpoint
+            reinas_value.append(15)
+            print "Sus Reinas Ahora Son: ",jr[x]
+            print "Actualmente Tiene", jp[x], "Puntos"
+            gameover(x)
+            return jp[x]
+          else:
+            nada="nada"
+        if awake=="Reina Perro":
+          if "Reina Gato" in jr[x]:
+            print '''Oh no!, Su Reina Gato Ataco a Su Reina Perro! Tuvo que volver a dormir a Su Reina Perro...'''
+            jr[x].remove("Reina Perro")
+            jr[x].append(0)
+            reinas.append("Reina Perro")
+            jp[x]=jp[x]-wpoint
+            reinas_value.append(15)
+            print "Sus Reinas Ahora Son: ",jr[x]
+            print "Actualmente Tiene", jp[x], "Puntos"
+            gameover(x)
+            return jp[x]
+          else:
+            nada="nada"
+        if awake=="Reina Rosa":
+          print "La Gran Reina Rosa Le Permite Despertar otra Reina!"
+          jp[x]=reynf(x)+5
+        gameover(x)
         print "Sus Reinas Ahora Son: ",jr[x]
         print "Actualmente Tiene", jp[x], "Puntos"
         return jp[x]
-      else:
-        nada="nada"
-    if awake=="Reina Perro":
-      if "Reina Gato" in jr[x]:
-        print '''Oh no!, Su Reina Gato Ataco a Su Reina Perro! Tuvo que volver a dormir a Su Reina Perro...'''
-        jr[x].remove("Reina Perro")
-        jr[x].append(0)
-        reinas.append("Reina Perro")
-        jp[x]=jp[x]-wpoint
-        manos[x].remove("rey")
-        reinas_value.append(15)
-        print "Sus Reinas Ahora Son: ",jr[x]
-        print "Actualmente Tiene", jp[x], "Puntos"
-        return jp[x]
-      else:
-        nada="nada"
-    if awake=="Reina Rosa":
-      print "La Gran Reina Rosa Le Permite Despertar otra Reina!"
-      manos[x].append("rey")
-      jp[x]=reyn(x)+5
-    return jp[x]
-    print "Sus Reinas Ahora Son: ",jr[x]
-    print "Actualmente Tiene", jp[x], "Puntos"
-    gameover(x)
-    manos[x].remove("rey")
-    manos[x].remove("rey")
-    gameover(x)
 def caballeron(x):
     print "El Jugador",lj[x],"Le hecho El Ojo A tu Reina"
     robarmachin=jr[0][4]
@@ -685,7 +747,7 @@ def caballeron(x):
     if "dragon" in manos[0]:
       print "Intentan Robar A Tu Reina!"
       eleccionf=raw_input(paneldragon)
-      if eleccionf=="" or " " or "n" or "N" or "no" or "NO":
+      if eleccionf=="2":
         robolugar=reinasc.index(robarmachin)
         robopoint=reinas_valuec[robolugar]
         jp[x]=jp[x]+robopoint
@@ -706,7 +768,7 @@ def caballeron(x):
         print "Y", jp[x], "Puntos"
         print " "
         gameover(x)
-      if eleccionf=="s" or "S" or "si" or "SI":
+      if eleccionf=="1":
         print "Usaste un Dragon, No Te Pudieron Robar"
         manos[x].remove("caballero")
         sacarm(x)
@@ -735,7 +797,7 @@ def caballeron(x):
       gameover(x)
 def bufonn(x):
   print "El Jugador", tjbb[x], "Usa Un Bufon"
-  cantidad=len(tpa)
+  cantidad=len(tba)
   manos[x].remove("bufon")
   sacarm(x)
   bufada=manos[x][4]
@@ -748,8 +810,7 @@ def bufonn(x):
     buforeina=neoj[0]
     if buforeina==1:
       print "El Jugador", tjbb[buforeina-1], "Despierta A Una Reina Gracias Al bufon!"
-      manos[0].append("rey")
-      reyf(x)
+      reyfb(x)
     if buforeina!=1:
       print "El Jugador", tjbb[buforeina-1], "Despierta A Una Reina Gracias Al bufon!"
       reynf(buforeina-1)
@@ -781,43 +842,41 @@ def pocionn(x):
           if robarmachin==0:
             robarmachin=jr[0][0]
     lugarurto=jr[0].index(robarmachin)
-    lugarrobar=reinasc.index(robarmachin)
-    puntosrobar=reinas_valuec[lugarrobar]
     if "varita" in manos[0]:
       print "Intentan Dormir A Tu Reina!"
       eleccionf=raw_input(panelvarita)
-      if eleccionf=="" or " " or "n" or "N" or "no" or "NO":
+      if eleccionf=="2":
+        robolugar=reinasc.index(robarmachin)
+        robopoint=reinas_valuec[robolugar]
+        jp[0]=jp[0]-robopoint
         jr[0][lugarurto]=0
-        reinas.append(robarmachin)
-        reinas_value.append(puntosrobar)
-        print "     Han Dormido A Tu ", robarmachin
-        print " "
+        print "     Han Dormido A Tu", robarmachin
         manos[x].remove("pocion")
         sacarm(x)
-        jp[0]=jp[0]-puntosrobar
+        print " "
         print lj[0], "Ahora tiene:"
         print jr[0], "Reinas"
         print "Y", jp[0], "Puntos"
         print " "
-      if eleccionf=="s" or "S" or "si" or "SI":
+      if eleccionf=="1":
         print "Usaste una Varita, No Pudieron Dormir Tu Reina"
         manos[x].remove("pocion")
         sacarm(x)
         manos[0].remove("varita")
         sacarm(0)
     else:
-        jr[0][lugarurto]=0
-        reinas.append(robarmachin)
-        reinas_value.append(puntosrobar)
-        print "     Han Dormido A Tu ", robarmachin
-        print " "
-        manos[x].remove("pocion")
-        sacarm(x)
-        jp[0]=jp[0]-puntosrobar
-        print lj[0], "Ahora tiene:"
-        print jr[0], "Reinas"
-        print "Y", jp[0], "Puntos"
-        print " "
+      robolugar=reinasc.index(robarmachin)
+      robopoint=reinas_valuec[robolugar]
+      jp[0]=jp[0]-robopoint
+      jr[0][lugarurto]=0
+      print "     Han Dormido A Tu", robarmachin
+      manos[x].remove("pocion")
+      sacarm(x)
+      print " "
+      print lj[0], "Ahora tiene:"
+      print jr[0], "Reinas"
+      print "Y", jp[0], "Puntos"
+      print " "
 def asacar(x):
   oldcard=random.choice(manos[x])
   manos[x].remove(oldcard)
